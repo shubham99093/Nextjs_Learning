@@ -19,6 +19,7 @@
   white-space: nowrap;
   cursor: pointer;
 }
+
 .links li:hover,
 .links li:active {
   color: #0099ff;
