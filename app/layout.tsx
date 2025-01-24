@@ -8,7 +8,8 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { Inter, Space_Grotesk } from "next/font/google";
-
+import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "@/context/ThemeProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,8 +23,6 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-spaceGrotest",
 });
-
-import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,17 +46,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
-      appearance={{
-        elements: {
-          formButtonPrimary: "primary-gradient",
-          footerActionLink: "primary-text-gradient hover:text-primary-500",
-        },
-      }}
-    >
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable}  ${inter.variable} ${spaceGrotesk.variable} antialiased`}
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable}  ${inter.variable} ${spaceGrotesk.variable} antialiased`}
+      >
+        <ClerkProvider
+          appearance={{
+            elements: {
+              formButtonPrimary: "primary-gradient",
+              footerActionLink: "primary-text-gradient hover:text-primary-500",
+            },
+          }}
         >
           <Navbar />
           <SignedOut>
@@ -66,10 +65,9 @@ export default function RootLayout({
           <SignedIn>
             <UserButton />
           </SignedIn>
-          <h1>This is a piece of text</h1>
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
